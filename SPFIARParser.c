@@ -4,11 +4,6 @@
 #include "SPFIARParser.h"
 
 bool spParserIsInt(const char* str){
-	// Return false on null pointer
-	if(!str){
-		return false;
-	}
-
 	bool isInt = true;
 	for(int i = 0; str[i] != '\0'; i++){
 		if(!((str[i] >= '0' && str[i] <= '9') || str[i] == '-')){
@@ -33,24 +28,27 @@ SPCommand spParserPraseLine(char* str){
 	const char *delimeter = " \t\r\n";
 
 	cmdName = strtok(strcopy, delimeter);
-	if(strcmp(cmdName, "undo_move")==0){
-		cmd.cmd = SP_UNDO_MOVE;
-	} else if(strcmp(cmdName, "add_disc")==0){
-		cmd.cmd = SP_ADD_DISC;
-		cmdArg = strtok(NULL, delimeter);
-		if(spParserIsInt(cmdArg)){
-			cmd.arg = atoi(cmdArg);
-			cmd.validArg = true;
+	if(cmdName){
+		if(strcmp(cmdName, "undo_move")==0){
+			cmd.cmd = SP_UNDO_MOVE;
+		} else if(strcmp(cmdName, "add_disc")==0){
+			cmd.cmd = SP_ADD_DISC;
+			cmdArg = strtok(NULL, delimeter);
+			if(cmdArg && spParserIsInt(cmdArg)){
+				cmd.arg = atoi(cmdArg);
+				cmd.validArg = true;
+			}
+		} else if(strcmp(cmdName, "suggest_move")==0){
+			cmd.cmd = SP_SUGGEST_MOVE;
+		} else if(strcmp(cmdName, "quit")==0){
+			cmd.cmd = SP_QUIT;
+		} else if(strcmp(cmdName, "restart")==0){
+			cmd.cmd = SP_RESTART;
+		} else{
+			cmd.cmd = SP_INVALID_LINE;
 		}
-	} else if(strcmp(cmdName, "suggest_move")==0){
-		cmd.cmd = SP_SUGGEST_MOVE;
-	} else if(strcmp(cmdName, "quit")==0){
-		cmd.cmd = SP_QUIT;
-	} else if(strcmp(cmdName, "restart")==0){
-		cmd.cmd = SP_RESTART;
-	} else{
-		cmd.cmd = SP_INVALID_LINE;
 	}
 
+	free(strcopy);
 	return cmd;
 }
