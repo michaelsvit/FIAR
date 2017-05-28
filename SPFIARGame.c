@@ -98,3 +98,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
     }
     return SP_FIAR_GAME_INVALID_MOVE;
 }
+
+bool spFiarGameIsValidMove(SPFiarGame* src, int col){
+    return src->tops[col] != SP_FIAR_GAME_N_COLUMNS;
+}
