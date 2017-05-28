@@ -177,7 +177,7 @@ bool checkTie(SPFiarGame* src);
 * @param *seqCount - sequence length counter
 * @param *seqSymbol - the symbol for which a sequence is being counted
 */
-void updateVariables(char boardSymbol, char *seqCount, char *seqSymbol);
+void updateVariables(char boardSymbol, int *seqCount, char *seqSymbol);
 
 /**
 * Scan rows for a sequence of 4 of the same player symbol.

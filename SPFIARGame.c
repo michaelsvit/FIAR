@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include "SPFIARGame.h"
 
@@ -95,7 +96,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
             return SP_FIAR_GAME_INVALID_ARGUMENT;
         }
         /* Put disc in given column and update top index */
-        src->gameBoard[game->tops[col]][col] = src->currentPlayer;
+        src->gameBoard[src->tops[col]][col] = src->currentPlayer;
         src->tops[col]++;
         return SP_FIAR_GAME_SUCCESS;
     }
@@ -167,7 +168,7 @@ char spFiarGameGetCurrentPlayer(SPFiarGame* src){
 
 char spFiarCheckWinner(SPFiarGame* src){
     if(!src){
-        return NULL;
+        return 0;
     }
 
     /* Check for a tie */
@@ -201,7 +202,7 @@ char spFiarCheckWinner(SPFiarGame* src){
     }
 
     /* No winner was found */
-    return NULL;
+    return 0;
 }
 
 bool checkTie(SPFiarGame* src){
@@ -213,7 +214,7 @@ bool checkTie(SPFiarGame* src){
     return true;
 }
 
-void updateVariables(char boardSymbol, char *seqCount, char *seqSymbol){
+void updateVariables(char boardSymbol, int *seqCount, char *seqSymbol){
     if(boardSymbol == *seqSymbol){
         (*seqCount)++;
     } else{
@@ -242,7 +243,7 @@ char scanRows(SPFiarGame* src){
     }
 
     /* No winner found in rows */
-    return NULL;
+    return 0;
 }
 
 char scanCols(SPFiarGame* src){
@@ -261,7 +262,7 @@ char scanCols(SPFiarGame* src){
     }
 
     /* No winner found in columns */
-    return NULL;
+    return 0;
 }
 
 char scanDownwardDiag(SPFiarGame* src){
@@ -286,7 +287,7 @@ char scanDownwardDiag(SPFiarGame* src){
     }
 
     /* No winner found in downward diagonals */
-    return NULL;
+    return 0;
 }
 
 char scanDownDiagIncreasing(SPFiarGame *src, int maxDiagLength){
@@ -305,7 +306,7 @@ char scanDownDiagIncreasing(SPFiarGame *src, int maxDiagLength){
     }
     
     /* No winner found */
-    return NULL;
+    return 0;
 }
 
 char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
@@ -340,10 +341,10 @@ char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
     }
 
     /* No winner found */
-    return NULL;
+    return 0;
 }
 
-char scanDownDiagDecreasing(SPFiarGame *src, maxDiagLength){
+char scanDownDiagDecreasing(SPFiarGame *src, int maxDiagLength){
     for(int diagLength = maxDiagLength-1; diagLength > 0; diagLength--){
         /* Scan single diagonal */
         int seqCount = 0;
@@ -359,7 +360,7 @@ char scanDownDiagDecreasing(SPFiarGame *src, maxDiagLength){
     }
 
     /* No winner found */
-    return NULL;
+    return 0;
 }
 
 char scanUpwardDiag(SPFiarGame* src){
@@ -384,7 +385,7 @@ char scanUpwardDiag(SPFiarGame* src){
     }
 
     /* No winner found in upward diagonals */
-    return NULL;
+    return 0;
 }
 
 char scanUpDiagIncreasing(SPFiarGame *src, int maxDiagLength){
@@ -403,10 +404,10 @@ char scanUpDiagIncreasing(SPFiarGame *src, int maxDiagLength){
     }
     
     /* No winner found */
-    return NULL;
+    return 0;
 }
 
-char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
+char scanUpMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
     if(SP_FIAR_GAME_N_ROWS <= SP_FIAR_GAME_N_COLUMNS){
         for(int diagStartCol = 0; diagStartCol + maxDiagLength <= SP_FIAR_GAME_N_COLUMNS; diagStartCol++){
             /* Scan single diagonal */
@@ -438,10 +439,10 @@ char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
     }
 
     /* No winner found */
-    return NULL;
+    return 0;
 }
 
-char scanUpDiagDecreasing(SPFiarGame *src, maxDiagLength){
+char scanUpDiagDecreasing(SPFiarGame *src, int maxDiagLength){
     for(int diagLength = maxDiagLength-1; diagLength > 0; diagLength--){
         /* Scan single diagonal */
         int seqCount = 0;
@@ -457,5 +458,5 @@ char scanUpDiagDecreasing(SPFiarGame *src, maxDiagLength){
     }
 
     /* No winner found */
-    return NULL;
+    return 0;
 }
