@@ -65,3 +65,12 @@ SPFiarGame* spFiarGameCopy(SPFiarGame* src){
 
     return copy;
 }
+
+void spFiarGameDestroy(SPFiarGame* src){
+    if(!src){
+        return;
+    }
+
+    spArrayListDestroy(src->history);
+    free(src);
+}
