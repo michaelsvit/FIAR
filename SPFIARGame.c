@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "SPFIARGame.h"
 
 SPFiarGame* spFiarGameCreate(int historySize){
@@ -125,5 +126,33 @@ SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
     } else{
         src->currentPlayer = SP_FIAR_GAME_PLAYER_1_SYMBOL;
     }
+    return SP_FIAR_GAME_SUCCESS;
+}
+
+SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src){
+    if(!src){
+        return SP_FIAR_GAME_INVALID_ARGUMENT;
+    }
+
+    /* Print gameBoard */
+    for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
+        /* Print single row */
+        printf("| ");
+        for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){
+            printf("%c ", src->gameBoard[i][j]);
+        }
+        printf("|\n");
+    }
+
+    /* Print footer */
+    for(int i = 0; i < SP_FIAR_GAME_N_COLUMNS*2 + 3; i++){
+        putchar('-');
+    }
+    printf("\n  ");
+    for(int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++){
+        printf("%d ", i+1);
+    }
+    putchar('\n');
+
     return SP_FIAR_GAME_SUCCESS;
 }
