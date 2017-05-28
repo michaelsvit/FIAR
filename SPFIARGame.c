@@ -74,3 +74,27 @@ void spFiarGameDestroy(SPFiarGame* src){
     spArrayListDestroy(src->history);
     free(src);
 }
+
+SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
+    if(!src || col < 0 || col >= SP_FIAR_GAME_N_COLUMNS){
+        return SP_FIAR_GAME_INVALID_ARGUMENT;
+    }
+    if(spFiarGameIsValidMove(src, col)){
+        // Add move to history
+        if(spArrayListIsFull(src->history)){
+            SP_ARRAY_LIST_MESSAGE msg = spArrayListRemoveLast(src->history);
+            if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
+                return SP_FIAR_GAME_INVALID_ARGUMENT;
+            }
+        }
+        SP_ARRAY_LIST_MESSAGE msg = spArrayListAddFirst(src->history, col);
+        if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
+            return SP_FIAR_GAME_INVALID_ARGUMENT;
+        }
+        // Put disc in given column and update top index
+        src->gameBoard[game->tops[col]][col] = src->currentPlayer;
+        src->tops[col]++;
+        return SP_FIAR_GAME_SUCCESS;
+    }
+    return SP_FIAR_GAME_INVALID_MOVE;
+}
