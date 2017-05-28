@@ -4,7 +4,7 @@ SPFiarGame* spFiarGameCreate(int historySize){
     if(historySize <= 0){
         return NULL;
     }
-    SPFiarGame *game = malloc(sizeof(SPFiarGame));
+    SPFiarGame *game = (SPFiarGame *)malloc(sizeof(SPFiarGame));
     if(!game){
         return NULL;
     }
@@ -27,6 +27,7 @@ SPFiarGame* spFiarGameCreate(int historySize){
     // Initialize history ArrayList
     game->history = spArrayListCreate(historySize);
     if(!game->history){
+        free(game);
         return NULL;
     }
 
@@ -37,7 +38,7 @@ SPFiarGame* spFiarGameCopy(SPFiarGame* src){
     if(!src){
         return NULL;
     }
-    SPFiarGame *copy = malloc(sizeof(SPFiarGame));
+    SPFiarGame *copy = (SPFiarGame *)malloc(sizeof(SPFiarGame));
     if(!copy){
         return NULL;
     }
@@ -60,6 +61,7 @@ SPFiarGame* spFiarGameCopy(SPFiarGame* src){
     // Copy history
     copy->history = spArrayListCopy(src->history);
     if(!copy->history){
+        free(copy);
         return NULL;
     }
 
@@ -101,4 +103,8 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
 
 bool spFiarGameIsValidMove(SPFiarGame* src, int col){
     return src->tops[col] != SP_FIAR_GAME_N_COLUMNS;
+}
+
+SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
+
 }

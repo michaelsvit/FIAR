@@ -21,7 +21,7 @@ SPCommand spParserPraseLine(char* str){
 		return cmd;
 	}
 	// Create copy of given string to prevent segfault when running tests on string literal
-	char *strcopy = malloc(strlen(str)+1);
+	char *strcopy = (char *)malloc(strlen(str)+1);
 	strcpy(strcopy, str);
 	
 	char *cmdName, *cmdArg;
