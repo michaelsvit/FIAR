@@ -156,3 +156,11 @@ SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src){
 
     return SP_FIAR_GAME_SUCCESS;
 }
+
+char spFiarGameGetCurrentPlayer(SPFiarGame* src){
+    if(!src){
+        return SP_FIAR_GAME_EMPTY_ENTRY;
+    } else{
+        return src->currentPlayer;
+    }
+}
