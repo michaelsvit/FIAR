@@ -20,7 +20,7 @@ SPCommand spParserPraseLine(char* str){
 		cmd.cmd = SP_INVALID_LINE;
 		return cmd;
 	}
-	// Create copy of given string to prevent segfault when running tests on string literal
+	/* Create copy of given string to prevent segfault when running tests on string literal */
 	char *strcopy = (char *)malloc(strlen(str)+1);
 	strcpy(strcopy, str);
 	

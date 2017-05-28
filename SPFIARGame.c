@@ -9,22 +9,22 @@ SPFiarGame* spFiarGameCreate(int historySize){
         return NULL;
     }
 
-    // Initialize gameBoard with empty entries
+    /* Initialize gameBoard with empty entries */
     for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
         for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){
             game->gameBoard[i][j] = SP_FIAR_GAME_EMPTY_ENTRY;
         }
     }
 
-    // Initialize tops with 0 values
+    /* Initialize tops with 0 values */
     for(int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++){
         game->tops[i] = 0;
     }
 
-    // Initialize currentPlayer to user
+    /* Initialize currentPlayer to user */
     game->currentPlayer = SP_FIAR_GAME_PLAYER_1_SYMBOL;
 
-    // Initialize history ArrayList
+    /* Initialize history ArrayList */
     game->history = spArrayListCreate(historySize);
     if(!game->history){
         free(game);
@@ -43,22 +43,22 @@ SPFiarGame* spFiarGameCopy(SPFiarGame* src){
         return NULL;
     }
 
-    // Copy gameBoard
+    /* Copy gameBoard */
     for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
         for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){
             copy->gameBoard[i][j] = src->gameBoard[i][j];
         }
     }
 
-    // Copy tops
+    /* Copy tops */
     for(int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++){
         copy->tops[i] = src->tops[i];
     }
 
-    // Copy current player
+    /* Copy current player */
     copy->currentPlayer = src->currentPlayer;
 
-    // Copy history
+    /* Copy history */
     copy->history = spArrayListCopy(src->history);
     if(!copy->history){
         free(copy);
@@ -82,7 +82,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
         return SP_FIAR_GAME_INVALID_ARGUMENT;
     }
     if(spFiarGameIsValidMove(src, col)){
-        // Add move to history
+        /* Add move to history */
         if(spArrayListIsFull(src->history)){
             SP_ARRAY_LIST_MESSAGE msg = spArrayListRemoveLast(src->history);
             if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
@@ -93,7 +93,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
         if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
             return SP_FIAR_GAME_INVALID_ARGUMENT;
         }
-        // Put disc in given column and update top index
+        /* Put disc in given column and update top index */
         src->gameBoard[game->tops[col]][col] = src->currentPlayer;
         src->tops[col]++;
         return SP_FIAR_GAME_SUCCESS;
@@ -106,5 +106,24 @@ bool spFiarGameIsValidMove(SPFiarGame* src, int col){
 }
 
 SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
+    if(!src){
+        return SP_FIAR_GAME_INVALID_ARGUMENT;
+    }
+    if(spArrayListIsEmpty(src->history)){
+        return SP_FIAR_GAME_NO_HISTORY;
+    }
 
+    /* Undo last move */
+    int lastMoveCol = spArrayListGetFirst(src->history);
+    spArrayListRemoveFirst(src->history);  /* impossible to get an error here */
+    src->tops[lastMoveCol]--;
+    /* Set gameBoard entry of last added disc to be empty */
+    src->gameBoard[src->tops[lastMoveCol]][lastMoveCol] = SP_FIAR_GAME_EMPTY_ENTRY;
+    /* Change current player */
+    if(src->currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL){
+        src->currentPlayer = SP_FIAR_GAME_PLAYER_2_SYMBOL;
+    } else{
+        src->currentPlayer = SP_FIAR_GAME_PLAYER_1_SYMBOL;
+    }
+    return SP_FIAR_GAME_SUCCESS;
 }
