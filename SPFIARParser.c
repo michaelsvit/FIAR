@@ -6,7 +6,7 @@
 bool spParserIsInt(const char* str){
 	bool isInt = true;
 	for(int i = 0; str[i] != '\0'; i++){
-		if(!((str[i] >= '0' && str[i] <= '9') || str[i] == '-')){
+		if(!((str[i] >= '0' && str[i] <= '9') || (i == 0 && str[i] == '-'))){
 			isInt = false;
 		}
 	}
