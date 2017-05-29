@@ -163,6 +163,12 @@ char spFiarCheckWinner(SPFiarGame* src);
 
 
 /**
+* Flips the current player in the given game.
+* @param src - source game
+*/
+void changePlayer(SPFiarGame *src);
+
+/**
 * Checks if there's a tie in the given game status.
 * @param src - source game
 * @return

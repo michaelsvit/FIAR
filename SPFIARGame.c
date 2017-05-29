@@ -95,9 +95,10 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
         if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
             return SP_FIAR_GAME_INVALID_ARGUMENT;
         }
-        /* Put disc in given column and update top index */
+        /* Put disc in given column, update top index and change player */
         src->gameBoard[src->tops[col]][col] = src->currentPlayer;
         src->tops[col]++;
+        changePlayer(src);
         return SP_FIAR_GAME_SUCCESS;
     }
     return SP_FIAR_GAME_INVALID_MOVE;
@@ -105,6 +106,14 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
 
 bool spFiarGameIsValidMove(SPFiarGame* src, int col){
     return src->tops[col] != SP_FIAR_GAME_N_COLUMNS;
+}
+
+void changePlayer(SPFiarGame *src){
+    if(src->currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL){
+        src->currentPlayer = SP_FIAR_GAME_PLAYER_2_SYMBOL;
+    } else{
+        src->currentPlayer = SP_FIAR_GAME_PLAYER_1_SYMBOL;
+    }
 }
 
 SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
@@ -122,11 +131,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
     /* Set gameBoard entry of last added disc to be empty */
     src->gameBoard[src->tops[lastMoveCol]][lastMoveCol] = SP_FIAR_GAME_EMPTY_ENTRY;
     /* Change current player */
-    if(src->currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL){
-        src->currentPlayer = SP_FIAR_GAME_PLAYER_2_SYMBOL;
-    } else{
-        src->currentPlayer = SP_FIAR_GAME_PLAYER_1_SYMBOL;
-    }
+    changePlayer(src);
     return SP_FIAR_GAME_SUCCESS;
 }
 
