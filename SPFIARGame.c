@@ -240,7 +240,7 @@ char scanRows(SPFiarGame* src){
         for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){
             char boardSymbol = src->gameBoard[i][j];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
@@ -259,7 +259,7 @@ char scanCols(SPFiarGame* src){
         for(int j = 0; j < SP_FIAR_GAME_N_ROWS; j++){
             char boardSymbol = src->gameBoard[j][i];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
@@ -303,7 +303,7 @@ char scanDownDiagIncreasing(SPFiarGame *src, int maxDiagLength){
         for(int i = diagLength-1, j = 0; (i<j?j-i:i-j) < diagLength; i--, j++){
             char boardSymbol = src->gameBoard[i][j];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
@@ -323,7 +323,7 @@ char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
             for(int i = maxDiagLength-1, j = diagStartCol; (i<j?j-i:i-j) < maxDiagLength; i--, j++){
                 char boardSymbol = src->gameBoard[i][j];
                 updateVariables(boardSymbol, &seqCount, &seqSymbol);
-                if(seqCount == 4){
+                if(seqCount == SP_FIAR_GAME_SPAN){
                     /* Found winner */
                     return seqSymbol;
                 }
@@ -337,7 +337,7 @@ char scanDownMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
             for(int i = diagStartRow, j = 0; (i<j?j-i:i-j) < maxDiagLength; i--, j++){
                 char boardSymbol = src->gameBoard[i][j];
                 updateVariables(boardSymbol, &seqCount, &seqSymbol);
-                if(seqCount == 4){
+                if(seqCount == SP_FIAR_GAME_SPAN){
                     /* Found winner */
                     return seqSymbol;
                 }
@@ -357,7 +357,7 @@ char scanDownDiagDecreasing(SPFiarGame *src, int maxDiagLength){
         for(int i = SP_FIAR_GAME_N_ROWS-1, j = SP_FIAR_GAME_N_COLUMNS - diagLength; (i<j?j-i:i-j) < diagLength; i--, j++){
             char boardSymbol = src->gameBoard[i][j];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
@@ -401,7 +401,7 @@ char scanUpDiagIncreasing(SPFiarGame *src, int maxDiagLength){
         for(int i = SP_FIAR_GAME_N_ROWS - diagLength, j = diagLength-1; i < SP_FIAR_GAME_N_ROWS && j < SP_FIAR_GAME_N_COLUMNS; i++, j++){
             char boardSymbol = src->gameBoard[i][j];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
@@ -421,7 +421,7 @@ char scanUpMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
             for(int i = 0, j = diagStartCol; i < SP_FIAR_GAME_N_ROWS && j < SP_FIAR_GAME_N_COLUMNS; i++, j++){
                 char boardSymbol = src->gameBoard[i][j];
                 updateVariables(boardSymbol, &seqCount, &seqSymbol);
-                if(seqCount == 4){
+                if(seqCount == SP_FIAR_GAME_SPAN){
                     /* Found winner */
                     return seqSymbol;
                 }
@@ -435,7 +435,7 @@ char scanUpMaxLengthDiag(SPFiarGame *src, int maxDiagLength){
             for(int i = diagStartRow, j = 0; i < SP_FIAR_GAME_N_ROWS && j < SP_FIAR_GAME_N_COLUMNS; i++, j++){
                 char boardSymbol = src->gameBoard[i][j];
                 updateVariables(boardSymbol, &seqCount, &seqSymbol);
-                if(seqCount == 4){
+                if(seqCount == SP_FIAR_GAME_SPAN){
                     /* Found winner */
                     return seqSymbol;
                 }
@@ -455,7 +455,7 @@ char scanUpDiagDecreasing(SPFiarGame *src, int maxDiagLength){
         for(int i = 0, j = SP_FIAR_GAME_N_COLUMNS - diagLength; i < SP_FIAR_GAME_N_ROWS && j < SP_FIAR_GAME_N_COLUMNS; i++, j++){
             char boardSymbol = src->gameBoard[i][j];
             updateVariables(boardSymbol, &seqCount, &seqSymbol);
-            if(seqCount == 4){
+            if(seqCount == SP_FIAR_GAME_SPAN){
                 /* Found winner */
                 return seqSymbol;
             }
