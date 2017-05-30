@@ -4,6 +4,10 @@
 #include "SPFIARParser.h"
 
 bool spParserIsInt(const char* str){
+	if(!(*str)){
+		/* Empty string */
+		return false;
+	}
 	bool isInt = true;
 	for(int i = 0; str[i] != '\0'; i++){
 		if(!((str[i] >= '0' && str[i] <= '9') || (i == 0 && (str[i] == '-' || str[i] == '+')))){
