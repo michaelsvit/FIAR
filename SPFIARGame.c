@@ -244,7 +244,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
 }
 
 bool spFiarGameIsValidMove(SPFiarGame* src, int col){
-    return src->tops[col] != SP_FIAR_GAME_N_COLUMNS;
+    return src->tops[col] != SP_FIAR_GAME_N_ROWS;
 }
 
 void changePlayer(SPFiarGame *src){
