@@ -280,7 +280,7 @@ SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src){
     }
 
     /* Print gameBoard */
-    for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
+    for(int i = SP_FIAR_GAME_N_ROWS-1; i >= 0; i--){
         /* Print single row */
         printf("| ");
         for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){
