@@ -17,7 +17,7 @@ bool spParserIsInt(const char* str){
 	return isInt;
 }
 
-SPCommand spParserPraseLine(char* str){
+SPCommand spParserPraseLine(const char* str){
 	SPCommand cmd;
 	cmd.validArg = false;
 	if(!str){
