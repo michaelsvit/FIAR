@@ -25,7 +25,7 @@ void scoreScanCols(SPFiarGame* game, int* scoring) {
     for (int i = 0; i < SP_FIAR_GAME_N_ROWS - SPAN_SIZE + 1; i++) {
         for (int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++) {
             int totalSum = 0;
-            for (int row = 0; row < 4; row++) {
+            for (int row = 0; row < SPAN_SIZE; row++) {
                 if (game->gameBoard[i+row][j] == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
                     totalSum++;
                 }
