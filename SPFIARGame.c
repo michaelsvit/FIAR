@@ -127,6 +127,7 @@ SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
     /* Undo last move */
     int lastMoveCol = spArrayListGetFirst(src->history);
     spArrayListRemoveFirst(src->history);  /* impossible to get an error here */
+
     src->tops[lastMoveCol]--;
     /* Set gameBoard entry of last added disc to be empty */
     src->gameBoard[src->tops[lastMoveCol]][lastMoveCol] = SP_FIAR_GAME_EMPTY_ENTRY;
@@ -135,13 +136,26 @@ SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
     return SP_FIAR_GAME_SUCCESS;
 }
 
+int undoColNumber(SPFiarGame* src) {
+    if(!src) {
+        return -1;
+    }
+    if(spArrayListIsEmpty(src->history)) {
+        return -1;
+    }
+    else {
+        int lastMoveCol = spArrayListGetFirst(src->history);
+        return lastMoveCol;
+    }
+}
+
 SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src){
     if(!src){
         return SP_FIAR_GAME_INVALID_ARGUMENT;
     }
 
     /* Print gameBoard */
-    for(int i = SP_FIAR_GAME_N_ROWS-1; i >= 0; i--){
+    for(int i = SP_FIAR_GAME_N_ROWS - 1; i >= 0; i--){
         /* Print single row */
         printf("| ");
         for(int j = 0; j < SP_FIAR_GAME_N_COLUMNS; j++){

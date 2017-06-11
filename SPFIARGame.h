@@ -3,6 +3,7 @@
 #include <stdbool.h>
 #include "SPArrayList.h"
 
+
 /**
  * SPFIARGame Summary:
  *
@@ -298,4 +299,12 @@ char scanUpMaxLengthDiag(SPFiarGame *src, int maxDiagLength);
 */
 char scanUpDiagDecreasing(SPFiarGame *src, int maxDiagLength);
 
+/**
+* Auxiliary function for spFiarGameUndoPrevMove.
+* returns the column we remove from (the first in history).
+* @param src - source game
+* @return
+* int- column number
+*/
+int undoColNumber(SPFiarGame* src);
 #endif

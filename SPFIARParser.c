@@ -31,16 +31,21 @@ SPCommand spParserPraseLine(const char* str){
 	char *cmdName, *cmdArg;
 	const char *delimeter = " \t\r\n";
 
+	/* by default - invalid */
+	cmd.cmd = SP_INVALID_LINE;
+
 	cmdName = strtok(strcopy, delimeter);
 	if(cmdName){
 		if(strcmp(cmdName, "undo_move")==0){
 			cmd.cmd = SP_UNDO_MOVE;
-		} else if(strcmp(cmdName, "add_disc")==0){
-			cmd.cmd = SP_ADD_DISC;
+		} else if(strcmp(cmdName, "add_disc")==0) {
 			cmdArg = strtok(NULL, delimeter);
-			if(cmdArg && spParserIsInt(cmdArg)){
-				cmd.arg = atoi(cmdArg);
-				cmd.validArg = true;
+			if (cmdArg) {
+				cmd.cmd = SP_ADD_DISC;
+				if (spParserIsInt(cmdArg)) {
+					cmd.arg = atoi(cmdArg);
+					cmd.validArg = true;
+				}
 			}
 		} else if(strcmp(cmdName, "suggest_move")==0){
 			cmd.cmd = SP_SUGGEST_MOVE;
@@ -48,7 +53,11 @@ SPCommand spParserPraseLine(const char* str){
 			cmd.cmd = SP_QUIT;
 		} else if(strcmp(cmdName, "restart")==0){
 			cmd.cmd = SP_RESTART;
-		} else{
+		}
+
+		/* check no extra arguments are given */
+		cmdArg = strtok(NULL, delimeter);
+		if (cmdArg != NULL) {
 			cmd.cmd = SP_INVALID_LINE;
 		}
 	}
@@ -56,3 +65,4 @@ SPCommand spParserPraseLine(const char* str){
 	free(strcopy);
 	return cmd;
 }
+
