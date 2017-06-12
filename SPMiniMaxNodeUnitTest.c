@@ -90,7 +90,7 @@ static bool scoreScanUpwardDiagTest(){
     ASSERT_TRUE(createBoard1(game));
 
     int *spanCounters = calloc(9, sizeof(int));
-    scoreScanDownDiag(game, spanCounters);
+    scoreScanUpDiag(game, spanCounters);
 
     /* Check correctness of results */
     ASSERT_TRUE(checkResults(spanCounters, (int[]){0,2,2,2,0,2,3,1,0}));
@@ -106,7 +106,7 @@ static bool scoreScanDownwardDiagTest(){
     ASSERT_TRUE(createBoard1(game));
 
     int *spanCounters = calloc(9, sizeof(int));
-    scoreScanUpDiag(game, spanCounters);
+    scoreScanDownDiag(game, spanCounters);
 
     /* Check correctness of results */
     ASSERT_TRUE(checkResults(spanCounters, (int[]){2,1,1,0,0,2,0,1,1}));
