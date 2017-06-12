@@ -7,6 +7,7 @@ void scoreScanRows(SPFiarGame* game, int* scoring);
 void scoreScanCols(SPFiarGame* game, int* scoring);
 void scoreScanDownDiag(SPFiarGame* game, int* scoring);
 void scoreScanUpDiag(SPFiarGame* game, int* scoring);
+int score(SPFiarGame* game);
 int spScoreCurrentMove(SPFiarGame* game);
 
 #endif
