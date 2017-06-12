@@ -51,7 +51,7 @@ SPCommand spParserPraseLine(const char* str){
 			cmd.cmd = SP_SUGGEST_MOVE;
 		} else if(strcmp(cmdName, "quit")==0){
 			cmd.cmd = SP_QUIT;
-		} else if(strcmp(cmdName, "restart")==0){
+		} else if(strcmp(cmdName, "restart_game")==0){
 			cmd.cmd = SP_RESTART;
 		}
 

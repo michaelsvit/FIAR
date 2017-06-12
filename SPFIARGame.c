@@ -172,7 +172,7 @@ SP_FIAR_GAME_MESSAGE spFiarGamePrintBoard(SPFiarGame* src){
     for(int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++){
         printf("%d ", i+1);
     }
-    putchar('\n');
+    printf(" \n");
 
     return SP_FIAR_GAME_SUCCESS;
 }

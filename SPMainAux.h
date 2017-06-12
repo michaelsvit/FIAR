@@ -5,8 +5,8 @@
 
 void getLineFromUser(const char* prompt, char* buf, int len);
 int getDifficultyLevel();
-void undoHandler(SPFiarGame* currentGame);
-void addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel);
-void suggestMoveHandler(SPFiarGame* currentGame, int difficultyLevel);
+bool undoHandler(SPFiarGame* currentGame);
+bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel);
+bool suggestMoveHandler(SPFiarGame* currentGame, int difficultyLevel);
 
 #endif

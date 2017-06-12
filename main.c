@@ -4,44 +4,67 @@
 #include "SPFIARGame.h"
 #include "SPFIARParser.h"
 
-#define USER_INPUT_LEN 1024
-
+#define USER_INPUT_LEN          1024
+#define NEXT_MOVE_COMMAND       "Please make the next move:\n"
+#define INVALID_COMMAND_ERROR   "Error: invalid command\n"
 
 int main()
 {
     char userInput[USER_INPUT_LEN];
-    int difficultyLevel = getDifficultyLevel();
-    SPFiarGame* currentGame = spFiarGameCreate(20);
+    bool error = false;
+    int difficultyLevel;
+    SPFiarGame* currentGame = NULL;
 
+    difficultyLevel = getDifficultyLevel();
+    if (difficultyLevel == 0) {
+        printf("Exiting...\n");
+        return 0;
+    }
+
+    currentGame = spFiarGameCreate(20);
     spFiarGamePrintBoard(currentGame);
 
-    while(true) {
-        getLineFromUser("Please enter a command:\n", userInput, USER_INPUT_LEN);
+    while (true) {
+        if (!error) {
+            getLineFromUser(NEXT_MOVE_COMMAND, userInput, USER_INPUT_LEN);
+        } else {
+            getLineFromUser("", userInput, USER_INPUT_LEN);
+        }
+
         SPCommand command = spParserPraseLine(userInput);
         SP_COMMAND currentCommand = command.cmd;
 
         if (currentCommand == SP_UNDO_MOVE) {
-            undoHandler(currentGame);
+            error = !undoHandler(currentGame);
         }
-
-        if (currentCommand == SP_ADD_DISC) {
-            addDiscHandler(currentGame, command, difficultyLevel);
+        else if (currentCommand == SP_ADD_DISC) {
+            error = !addDiscHandler(currentGame, command, difficultyLevel);
         }
-
-        if (currentCommand == SP_SUGGEST_MOVE) {
-           suggestMoveHandler(currentGame, difficultyLevel);
+        else if (currentCommand == SP_SUGGEST_MOVE) {
+            error = !suggestMoveHandler(currentGame, difficultyLevel);
+            error = true;
         }
-
-        if (currentCommand == SP_RESTART) {
+        else if (currentCommand == SP_RESTART) {
+            printf("Game restarted!\n");
             spFiarGameDestroy(currentGame);
-            difficultyLevel = getDifficultyLevel();
-            SPFiarGame* currentGame = spFiarGameCreate(20);
-            spFiarGamePrintBoard(currentGame);
-        }
 
-        if (currentCommand == SP_QUIT) {
+            difficultyLevel = getDifficultyLevel();
+            if (difficultyLevel == 0) {
+                printf("Exiting...\n");
+                break;
+            }
+
+            currentGame = spFiarGameCreate(20);
+            spFiarGamePrintBoard(currentGame);
+            error = false;
+        }
+        else if (currentCommand == SP_QUIT) {
+            printf("Exiting...\n");
             spFiarGameDestroy(currentGame);
             break;
+        } else {
+            printf("%s", INVALID_COMMAND_ERROR);
+            error = true;
         }
     }
     return 0;
