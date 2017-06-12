@@ -82,7 +82,6 @@ void scoreScanDownDiag(SPFiarGame* game, int* scoring) {
     }
 }
 
-/* the function gets a game and returns the score for the spesific board */
 int score(SPFiarGame* game) {
     if (game == NULL) {
         return 0;
@@ -114,28 +113,19 @@ int score(SPFiarGame* game) {
     return totalScore;
 }
 
-/**
- * A recursive function that calculates and return the best column to put a disc on by calculating the
- * score for the current user and the curretn suggested move. use minimax algorithm.
- * @param currentGame - The current game state
- * @param maxDepth - The maximum depth of the miniMax algorithm
- * @param suggestedMove - pointer to the column number that will give the best score for the current player
- * @return
- * SP_FIAR_GAME_PLAYER_1_SYMBOL - if player 1 wins
- * SP_FIAR_GAME_PLAYER_2_SYMBOL - if player 2 wins
- * SP_FIAR_GAME_TIE_SYMBOL - if there is a tie
- * if maxDapth is 0 - return the score of the current move
- */
+
 int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove) {
     char currentPlayer = spFiarGameGetCurrentPlayer(currentGame);
     int currentScore = (currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL) ? INT_MIN : INT_MAX;
     int currentSuggestedMove = 0;
     int sonScore;
 
+    /* We reached a leaf node */
     if (maxDepth == 0) {
         return score(currentGame);
     }
 
+    /* If current board configuration has a winner then stop recursion */
     char sy = spFiarCheckWinner(currentGame);
     if (sy == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
         return INT_MAX;
@@ -147,11 +137,16 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
         return 0;
     }
 
+    /* Make a recursive call for each possible move from current game state */
     for (int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++) {
         if (spFiarGameIsValidMove(currentGame, i)) {
             SPFiarGame* cpyGame = spFiarGameCopy(currentGame);
             spFiarGameSetMove(cpyGame, i);
             sonScore = spScoreCurrentMove(cpyGame, maxDepth-1, NULL);
+            /* If this is a min-node and child score is lower than current score
+             *  or this is a max-node and child score is higher than current score
+             *  then update corresponding variables
+             */
             if ((currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL && sonScore > currentScore) ||
                     (currentPlayer == SP_FIAR_GAME_PLAYER_2_SYMBOL && sonScore < currentScore)) {
                 currentScore = sonScore;
@@ -161,6 +156,7 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
         }
     }
 
+    /* If this is the root node then update suggested move */
     if (suggestedMove != NULL) {
         *suggestedMove = currentSuggestedMove;
     }
