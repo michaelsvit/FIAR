@@ -3,6 +3,10 @@
 #ifndef SPMINIMAXNODE_H_
 #define SPMINIMAXNODE_H_
 
-int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove);
+void scoreScanRows(SPFiarGame* game, int* scoring);
+void scoreScanCols(SPFiarGame* game, int* scoring);
+void scoreScanDownDiag(SPFiarGame* game, int* scoring);
+void scoreScanUpDiag(SPFiarGame* game, int* scoring);
+int spScoreCurrentMove(SPFiarGame* game);
 
 #endif
