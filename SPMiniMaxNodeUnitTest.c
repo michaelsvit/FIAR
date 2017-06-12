@@ -168,6 +168,7 @@ static bool printTest1(){
     ASSERT_TRUE(createBoard1(game));
     printf("********************TEST 1********************\n");
     spFiarGamePrintBoard(game);
+    spFiarGameDestroy(game);
     return true;
 }
 
@@ -177,6 +178,7 @@ static bool printTest2(){
     ASSERT_TRUE(createBoard2(game));
     printf("********************TEST 2********************\n");
     spFiarGamePrintBoard(game);
+    spFiarGameDestroy(game);
     return true;
 }
 
