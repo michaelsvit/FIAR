@@ -1,7 +1,7 @@
-#include "SPFIARGame.h"
-
 #ifndef SPMINIMAXNODE_H_
 #define SPMINIMAXNODE_H_
+
+#include "SPFIARGame.h"
 
 /**
 * Scan game board rows and count number of spans of size 4
