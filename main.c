@@ -56,7 +56,7 @@ int main()
                 break;
             }
 
-            currentGame = spFiarGameCreate(20);
+            currentGame = spFiarGameCreate(HISTORY_SIZE);
             spFiarGamePrintBoard(currentGame);
             error = false;
         }
