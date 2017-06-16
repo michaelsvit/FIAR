@@ -5,6 +5,7 @@
 #include "SPFIARParser.h"
 
 #define USER_INPUT_LEN          1024
+#define HISTORY_SIZE            20
 #define NEXT_MOVE_COMMAND       "Please make the next move:\n"
 #define INVALID_COMMAND_ERROR   "Error: invalid command\n"
 
@@ -21,7 +22,7 @@ int main()
         return 0;
     }
 
-    currentGame = spFiarGameCreate(20);
+    currentGame = spFiarGameCreate(HISTORY_SIZE);
     spFiarGamePrintBoard(currentGame);
 
     while (true) {
