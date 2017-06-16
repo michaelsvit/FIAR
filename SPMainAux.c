@@ -71,7 +71,7 @@ bool undoHandler(SPFiarGame* currentGame) {
 
 bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel) {
     userCol = command.arg-1;
-    if (command.validArg == false || userCol < 0 || userCol >= 7) {
+    if (command.validArg == false || userCol < 0 || userCol >= SP_FIAR_GAME_N_COLUMNS) {
         printf("Error: column number must be in range 1-7\n");
         return false;
     }
