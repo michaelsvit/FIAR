@@ -42,7 +42,8 @@ int main()
             error = !addDiscHandler(currentGame, command, difficultyLevel);
         }
         else if (currentCommand == SP_SUGGEST_MOVE) {
-            error = !suggestMoveHandler(currentGame, difficultyLevel);
+            suggestMoveHandler(currentGame, difficultyLevel);
+            /* force request for another input without printing prompt */
             error = true;
         }
         else if (currentCommand == SP_RESTART) {
