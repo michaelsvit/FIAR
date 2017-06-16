@@ -3,6 +3,10 @@
 #include "SPFIARParser.h"
 #include "SPFIARGame.h"
 
+/**
+Get input from user through stdin.
+
+*/
 void getLineFromUser(const char* prompt, char* buf, int len);
 int getDifficultyLevel();
 bool undoHandler(SPFiarGame* currentGame);

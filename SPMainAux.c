@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "SPMainAux.h"
-#include "SPFIARParser.h"
-#include "SPFIARGame.h"
 #include "SPMiniMax.h"
 
 
