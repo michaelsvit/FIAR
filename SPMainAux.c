@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "SPMainAux.h"
-#include "SPFIARParser.h"
-#include "SPFIARGame.h"
 #include "SPMiniMax.h"
 
 
@@ -72,11 +70,12 @@ bool undoHandler(SPFiarGame* currentGame) {
 }
 
 bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel) {
-    if (command.validArg == false || command.arg-1 < 0 || command.arg-1 > 7) {
+    int userCol = command.arg-1;
+    if (command.validArg == false || userCol < 0 || userCol >= SP_FIAR_GAME_N_COLUMNS) {
         printf("Error: column number must be in range 1-7\n");
         return false;
     }
-    if (!spFiarGameIsValidMove(currentGame, command.arg - 1)) {
+    if (!spFiarGameIsValidMove(currentGame, userCol)) {
         printf("Error: column %d is full\n", command.arg);
         return false;
     }
@@ -85,7 +84,7 @@ bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLe
         return false;
     }
     /* if no problem set the move*/
-    spFiarGameSetMove(currentGame, command.arg-1);
+    spFiarGameSetMove(currentGame, userCol);
 
     /* if the user wins */
     if (spFiarCheckWinner(currentGame) == SP_FIAR_GAME_PLAYER_1_SYMBOL) {

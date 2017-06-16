@@ -1,7 +1,8 @@
 #include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "SPFIARGame.h"
+#include "SPMiniMaxNode.h"
+
 #define SPAN_SIZE 4
 
 void scoreScanRows(SPFiarGame* game, int* scoring) {
