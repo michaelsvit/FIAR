@@ -5,6 +5,9 @@
 
 /* the function return the best move according to the current player*/
 int spMinimaxSuggestMove(SPFiarGame* currentGame, unsigned int maxDepth) {
+    if(currentGame == NULL || maxDepth == 0){
+        return -1;
+    }
     int suggestedMove = -1;
     spScoreCurrentMove(currentGame, maxDepth, &suggestedMove);
     return suggestedMove;
