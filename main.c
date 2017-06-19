@@ -25,14 +25,11 @@ int main()
     currentGame = spFiarGameCreate(HISTORY_SIZE);
     /* if spFiarGameCreate did not work*/
     if (!currentGame) {
-        printf("Error: spFiarGameCreate has failed");
-        spFiarGameDestroy(currentGame);
-        break;
+        printf("Error: malloc has failed");
+        return 0;
     }
     
-    else {
-        spFiarGamePrintBoard(currentGame);
-    }
+    spFiarGamePrintBoard(currentGame);
     
     while (true) {
         if (!error) {
@@ -68,8 +65,7 @@ int main()
             currentGame = spFiarGameCreate(HISTORY_SIZE);
             /* if spFiarGameCreate did not work*/
             if (!currentGame) {
-                printf("Error: %s has failed", spFiarGameCreate);
-                spFiarGameDestroy(currentGame);
+                printf("Error: malloc has failed");
                 break;
             }
             
