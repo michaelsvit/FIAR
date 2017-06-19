@@ -113,7 +113,15 @@ bool suggestMoveHandler(SPFiarGame* currentGame, int difficultyLevel) {
         return false;
     }
     int suggestedMove = spMinimaxSuggestMove(currentGame, difficultyLevel);
-    printf("Suggested move: drop a disc to column %d\n", suggestedMove+1);
+    if(suggestedMove != -1){
+        printf("Suggested move: drop a disc to column %d\n", suggestedMove+1);
+    } else {
+        printMallocError();
+    }
     return true;
+}
+
+void printMallocError(){
+    printf("Error: malloc has failed");
 }
 

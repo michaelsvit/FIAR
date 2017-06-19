@@ -142,8 +142,16 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
     for (int i = 0; i < SP_FIAR_GAME_N_COLUMNS; i++) {
         if (spFiarGameIsValidMove(currentGame, i)) {
             SPFiarGame* cpyGame = spFiarGameCopy(currentGame);
+            if(!cpyGame){
+                *suggestedMove = -1;
+                return 0;
+            }
             spFiarGameSetMove(cpyGame, i);
             sonScore = spScoreCurrentMove(cpyGame, maxDepth-1, NULL);
+            /* If a memory allocation error occured anywhere along the recursion then return immediately */
+            if(*suggestedMove == -1){
+                return 0;
+            }
             /* If this is a min-node and child score is lower than current score
              *  or this is a max-node and child score is higher than current score
              *  then update corresponding variables
@@ -158,7 +166,7 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
     }
 
     /* If this is the root node then update suggested move */
-    if (suggestedMove != NULL) {
+    if (suggestedMove != NULL && *suggestedMove != -1) {
         *suggestedMove = currentSuggestedMove;
     }
 
