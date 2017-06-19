@@ -49,7 +49,8 @@ int score(SPFiarGame* game);
  * at it's root node, and the first move through which this score was calculated.
  * @param currentGame - The current game state
  * @param maxDepth - The maximum depth of the miniMax algorithm
- * @param suggestedMove - wil contain column number that will give the best score for the current player
+ * @param suggestedMove - will contain column number that will give the best score for the current player
+ * @param errorOccured - flag used for keeping track if a memory allocation error occurred
  * @return - the score for the suggested move, found by minimax algorithm
  */
 int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove, int *errorOccurred);
