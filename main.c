@@ -23,12 +23,13 @@ int main()
     }
 
     currentGame = spFiarGameCreate(HISTORY_SIZE);
+    /* if spFiarGameCreate did not work*/
     if (!currentGame) {
         printf("Error: %s has failed", spFiarGameCreate);
         spFiarGameDestroy(currentGame);
         break;
     }
-    /* if spFiarGameCreate did not work*/
+    
     else {
         spFiarGamePrintBoard(currentGame);
     }
@@ -63,10 +64,19 @@ int main()
                 printf("Exiting...\n");
                 break;
             }
-
+            
             currentGame = spFiarGameCreate(HISTORY_SIZE);
-            spFiarGamePrintBoard(currentGame);
-            error = false;
+            /* if spFiarGameCreate did not work*/
+            if (!currentGame) {
+                printf("Error: %s has failed", spFiarGameCreate);
+                spFiarGameDestroy(currentGame);
+                break;
+            }
+            
+            else {
+                spFiarGamePrintBoard(currentGame);
+                error = false;
+            }
         }
         else if (currentCommand == SP_QUIT) {
             printf("Exiting...\n");
