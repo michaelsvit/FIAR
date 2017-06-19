@@ -52,6 +52,6 @@ int score(SPFiarGame* game);
  * @param suggestedMove - wil contain column number that will give the best score for the current player
  * @return - the score for the suggested move, found by minimax algorithm
  */
-int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove);
+int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove, int *errorOccurred);
 
 #endif

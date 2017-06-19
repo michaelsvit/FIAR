@@ -9,7 +9,11 @@ int spMinimaxSuggestMove(SPFiarGame* currentGame, unsigned int maxDepth) {
         return -1;
     }
     int suggestedMove = 0;
-    spScoreCurrentMove(currentGame, maxDepth, &suggestedMove);
+    int errorOccured = 0;
+    spScoreCurrentMove(currentGame, maxDepth, &suggestedMove, &errorOccured);
+    if(errorOccured){
+        return -1;
+    }
     return suggestedMove;
 }
 

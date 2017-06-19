@@ -115,7 +115,7 @@ int score(SPFiarGame* game) {
 }
 
 
-int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove) {
+int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* suggestedMove, int *errorOccured) {
     char currentPlayer = spFiarGameGetCurrentPlayer(currentGame);
     int currentScore = (currentPlayer == SP_FIAR_GAME_PLAYER_1_SYMBOL) ? INT_MIN : INT_MAX;
     int currentSuggestedMove = 0;
@@ -143,15 +143,15 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
         if (spFiarGameIsValidMove(currentGame, i)) {
             SPFiarGame* cpyGame = spFiarGameCopy(currentGame);
             if(!cpyGame){
-                *suggestedMove = -1;
+                *errorOccured = 1;
                 return 0;
             }
             spFiarGameSetMove(cpyGame, i);
-            sonScore = spScoreCurrentMove(cpyGame, maxDepth-1, NULL);
+            sonScore = spScoreCurrentMove(cpyGame, maxDepth-1, NULL, errorOccured);
             /* If a memory allocation error occured anywhere along the recursion
              * then free memory and return immediately
              */
-            if(*suggestedMove == -1){
+            if(*errorOccured){
                 spFiarGameDestroy(cpyGame);
                 return 0;
             }
@@ -169,7 +169,7 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
     }
 
     /* If this is the root node then update suggested move */
-    if (suggestedMove != NULL && *suggestedMove != -1) {
+    if (suggestedMove != NULL) {
         *suggestedMove = currentSuggestedMove;
     }
 
