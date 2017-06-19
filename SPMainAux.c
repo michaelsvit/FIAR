@@ -58,7 +58,7 @@ bool undoHandler(SPFiarGame* currentGame) {
 
     int secondColNumber = undoColNumber(currentGame) + 1;
     /* check if error*/
-    if (secondColNumber == -1) {
+    if (secondColNumber == 0) {
         printf("Error: cannot undo previous move!\n");
         return false;
     }
