@@ -202,6 +202,45 @@ static bool spFiarCheckWinnerTest4(){
     return true;
 }
 
+/**
+* Create the following game board:
+* |oooxooo|
+* |xxxoxxx|
+* |oooxooo|
+* |xxxoxxx|
+* |oooxooo|
+* |xxxoxxx|
+* ---------
+*  1234567
+*/
+static bool spFiarCheckWinnerTest5(){
+    SPFiarGame *game = spFiarGameCreate(HISTORY_SIZE);
+    for(int j = 0; j < 3; j++){
+        for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
+            spFiarGameSetMove(game, j);
+        }
+    }
+    spFiarGameSetMove(game, 6);
+    for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
+        spFiarGameSetMove(game, 3);
+    }
+    spFiarGameSetMove(game, 6);
+    for(int j = 4; j < SP_FIAR_GAME_N_COLUMNS-1; j++){
+        for(int i = 0; i < SP_FIAR_GAME_N_ROWS; i++){
+            spFiarGameSetMove(game, j);
+        }
+    }
+    for(int i = 2; i < SP_FIAR_GAME_N_ROWS; i++){
+        spFiarGameSetMove(game, 6);
+    }
+    
+    spFiarGamePrintBoard(game);    
+    ASSERT_TRUE(spFiarCheckWinner(game) == SP_FIAR_GAME_TIE_SYMBOL);
+    
+    spFiarGameDestroy(game);    
+    return true;
+}
+
 int main(){
     RUN_TEST(spFiarGameCreateTest);
     RUN_TEST(spFiarGameCopyTest);
@@ -211,6 +250,7 @@ int main(){
     RUN_TEST(spFiarCheckWinnerTest2);
     RUN_TEST(spFiarCheckWinnerTest3);
     RUN_TEST(spFiarCheckWinnerTest4);
+    RUN_TEST(spFiarCheckWinnerTest5);
 
     return 0;
 }
