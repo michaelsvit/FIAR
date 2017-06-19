@@ -69,10 +69,10 @@ bool undoHandler(SPFiarGame* currentGame) {
     return true;
 }
 
-bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel) {
+bool addDiscHandler(SPFiarGame** currentGame, SPCommand command, int difficultyLevel) {
     int userCol = command.arg-1;
     SP_FIAR_GAME_MESSAGE msg;
-    if (!command.validArg || (msg = spFiarGameSetMove(currentGame, userCol)) == SP_FIAR_GAME_INVALID_ARGUMENT) {
+    if (!command.validArg || (msg = spFiarGameSetMove(*currentGame, userCol)) == SP_FIAR_GAME_INVALID_ARGUMENT) {
         printf("Error: column number must be in range 1-7\n");
         return false;
     }
@@ -81,29 +81,32 @@ bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLe
         printf("Error: column %d is full\n", command.arg);
         return false;
     }
-    if (spFiarCheckWinner(currentGame) != 0) {
+    if (spFiarCheckWinner(*currentGame) != 0) {
         printf("Error: the game is over\n");
         return false;
     }
 
     /* if the user wins */
-    if (spFiarCheckWinner(currentGame) == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
-        spFiarGamePrintBoard(currentGame);
+    if (spFiarCheckWinner(*currentGame) == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
+        spFiarGamePrintBoard(*currentGame);
         printf("Game over: you win\nPlease enter 'quit' to exit or 'restart' to start a new game!\n");
         return false;
     }
-    int computerCol = spMinimaxSuggestMove(currentGame, difficultyLevel);
+    int computerCol = spMinimaxSuggestMove(*currentGame, difficultyLevel);
+    if(computerCol == -1){
+        handleMallocError(currentGame);
+    }
     printf("Computer move: add disc to column %d\n", computerCol+1);
-    spFiarGameSetMove(currentGame, computerCol);
+    spFiarGameSetMove(*currentGame, computerCol);
 
     /* if the compuer wins */
-    if (spFiarCheckWinner(currentGame) == SP_FIAR_GAME_PLAYER_2_SYMBOL) {
-        spFiarGamePrintBoard(currentGame);
+    if (spFiarCheckWinner(*currentGame) == SP_FIAR_GAME_PLAYER_2_SYMBOL) {
+        spFiarGamePrintBoard(*currentGame);
         printf("Game over: computer wins\nPlease enter 'quit' to exit or 'restart' to start a new game!\n");
         return false;
     }
     /* if no winner */
-    spFiarGamePrintBoard(currentGame);
+    spFiarGamePrintBoard(*currentGame);
     return true;
 }
 
@@ -115,11 +118,15 @@ void suggestMoveHandler(SPFiarGame** currentGame, int difficultyLevel) {
     if(suggestedMove != -1){
         printf("Suggested move: drop a disc to column %d\n", suggestedMove+1);
     } else {
-        spFiarGameDestroy(*currentGame);
-        /* Set currentGame to NULL in main loop to inform about malloc error */
-        *currentGame = NULL;
-        printMallocError();
+        handleMallocError(currentGame);
     }
+}
+
+void handleMallocError(SPFiarGame **currentGame){
+    spFiarGameDestroy(*currentGame);
+    /* Set currentGame to NULL in main loop to inform about malloc error */
+    *currentGame = NULL;
+    printMallocError();
 }
 
 void printMallocError(){

@@ -31,7 +31,7 @@ bool undoHandler(SPFiarGame* currentGame);
 * @param difficultyLevel    difficulty level of given game instance
 * @return                   true iff add_disc was successful
 */
-bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLevel);
+bool addDiscHandler(SPFiarGame** currentGame, SPCommand command, int difficultyLevel);
 
 /**
 * Handle suggest_move command from user.

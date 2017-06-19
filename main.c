@@ -45,7 +45,7 @@ int main()
             error = !undoHandler(currentGame);
         }
         else if (currentCommand == SP_ADD_DISC) {
-            error = !addDiscHandler(currentGame, command, difficultyLevel);
+            error = !addDiscHandler(&currentGame, command, difficultyLevel);
         }
         else if (currentCommand == SP_SUGGEST_MOVE) {
             suggestMoveHandler(&currentGame, difficultyLevel);
