@@ -25,7 +25,7 @@ int main()
     currentGame = spFiarGameCreate(HISTORY_SIZE);
     /* if spFiarGameCreate did not work*/
     if (!currentGame) {
-        printf("Error: %s has failed", spFiarGameCreate);
+        printf("Error: spFiarGameCreate has failed");
         spFiarGameDestroy(currentGame);
         break;
     }
