@@ -24,13 +24,13 @@ int main()
 
     currentGame = spFiarGameCreate(HISTORY_SIZE);
     if (!currentGame) {
-        spFiarGamePrintBoard(currentGame);
-    }
-    /* if spFiarGameCreate did not work*/
-    else {
         printf("Error: %s has failed", spFiarGameCreate);
         spFiarGameDestroy(currentGame);
         break;
+    }
+    /* if spFiarGameCreate did not work*/
+    else {
+        spFiarGamePrintBoard(currentGame);
     }
     
     while (true) {
