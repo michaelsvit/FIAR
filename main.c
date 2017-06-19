@@ -48,7 +48,11 @@ int main()
             error = !addDiscHandler(currentGame, command, difficultyLevel);
         }
         else if (currentCommand == SP_SUGGEST_MOVE) {
-            suggestMoveHandler(currentGame, difficultyLevel);
+            suggestMoveHandler(&currentGame, difficultyLevel);
+            if(currentGame == NULL){
+                /* Memory allocation error occurred */
+                return 0;
+            }
             /* force request for another input without printing prompt */
             error = true;
         }

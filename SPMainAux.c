@@ -107,18 +107,19 @@ bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLe
     return true;
 }
 
-bool suggestMoveHandler(SPFiarGame* currentGame, int difficultyLevel) {
-    if (spFiarCheckWinner(currentGame) != 0) {
+void suggestMoveHandler(SPFiarGame** currentGame, int difficultyLevel) {
+    if (spFiarCheckWinner(*currentGame) != 0) {
         printf("Error: the game is over\n");
-        return false;
     }
-    int suggestedMove = spMinimaxSuggestMove(currentGame, difficultyLevel);
+    int suggestedMove = spMinimaxSuggestMove(*currentGame, difficultyLevel);
     if(suggestedMove != -1){
         printf("Suggested move: drop a disc to column %d\n", suggestedMove+1);
     } else {
+        spFiarGameDestroy(*currentGame);
+        /* Set currentGame to NULL in main loop to inform about malloc error */
+        *currentGame = NULL;
         printMallocError();
     }
-    return true;
 }
 
 void printMallocError(){

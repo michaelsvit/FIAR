@@ -148,8 +148,11 @@ int spScoreCurrentMove(SPFiarGame* currentGame, unsigned int maxDepth, int* sugg
             }
             spFiarGameSetMove(cpyGame, i);
             sonScore = spScoreCurrentMove(cpyGame, maxDepth-1, NULL);
-            /* If a memory allocation error occured anywhere along the recursion then return immediately */
+            /* If a memory allocation error occured anywhere along the recursion
+             * then free memory and return immediately
+             */
             if(*suggestedMove == -1){
+                spFiarGameDestroy(cpyGame);
                 return 0;
             }
             /* If this is a min-node and child score is lower than current score

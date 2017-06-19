@@ -39,7 +39,7 @@ bool addDiscHandler(SPFiarGame* currentGame, SPCommand command, int difficultyLe
 * @param difficultyLevel    difficulty level of given game instance
 * @return                   true iff suggest_move was successful
 */
-bool suggestMoveHandler(SPFiarGame* currentGame, int difficultyLevel);
+void suggestMoveHandler(SPFiarGame** currentGame, int difficultyLevel);
 
 /**
 * Print error message about malloc failure.
