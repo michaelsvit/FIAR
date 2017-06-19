@@ -23,8 +23,16 @@ int main()
     }
 
     currentGame = spFiarGameCreate(HISTORY_SIZE);
-    spFiarGamePrintBoard(currentGame);
-
+    if (!currentGame) {
+        spFiarGamePrintBoard(currentGame);
+    }
+    /* if spFiarGameCreate did not work*/
+    else {
+        printf("Error: %s has failed", spFiarGameCreate);
+        spFiarGameDestroy(currentGame);
+        break;
+    }
+    
     while (true) {
         if (!error) {
             getLineFromUser(NEXT_MOVE_COMMAND, userInput, USER_INPUT_LEN);
