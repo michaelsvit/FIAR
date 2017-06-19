@@ -75,16 +75,16 @@ bool addDiscHandler(SPFiarGame** currentGame, SPCommand command, int difficultyL
         printf("Error: column number must be in range 1-7\n");
         return false;
     }
-    if (!spFiarGameIsValidMove(currentGame, userCol)) {
+    if (!spFiarGameIsValidMove(*currentGame, userCol)) {
         printf("Error: column %d is full\n", command.arg);
         return false;
     }
-    if (spFiarCheckWinner(currentGame) != 0) {
+    if (spFiarCheckWinner(*currentGame) != 0) {
         printf("Error: the game is over\n");
         return false;
     }
     /* if no problem set the move*/
-    spFiarGameSetMove(currentGame, userCol);
+    spFiarGameSetMove(*currentGame, userCol);
 
     /* if the user wins */
     if (spFiarCheckWinner(*currentGame) == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
