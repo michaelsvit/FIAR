@@ -42,6 +42,12 @@ bool addDiscHandler(SPFiarGame** currentGame, SPCommand command, int difficultyL
 void suggestMoveHandler(SPFiarGame** currentGame, int difficultyLevel);
 
 /**
+* Handle malloc error when using MiniMax function.
+* @param currentGame        currently running game instance
+*/
+void handleMallocError(SPFiarGame **currentGame);
+
+/**
 * Print error message about malloc failure.
 */
 void printMallocError();
