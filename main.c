@@ -25,7 +25,7 @@ int main()
     currentGame = spFiarGameCreate(HISTORY_SIZE);
     /* if spFiarGameCreate did not work*/
     if (!currentGame) {
-        printf("Error: malloc has failed");
+        printMallocError();
         return 0;
     }
     
@@ -65,7 +65,7 @@ int main()
             currentGame = spFiarGameCreate(HISTORY_SIZE);
             /* if spFiarGameCreate did not work*/
             if (!currentGame) {
-                printf("Error: malloc has failed");
+                printMallocError();
                 break;
             }
             

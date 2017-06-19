@@ -8,7 +8,7 @@ int spMinimaxSuggestMove(SPFiarGame* currentGame, unsigned int maxDepth) {
     if(currentGame == NULL || maxDepth == 0){
         return -1;
     }
-    int suggestedMove = -1;
+    int suggestedMove = 0;
     spScoreCurrentMove(currentGame, maxDepth, &suggestedMove);
     return suggestedMove;
 }
