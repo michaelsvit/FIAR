@@ -142,11 +142,7 @@ int undoColNumber(SPFiarGame* src) {
     }
     else {
         int lastMoveCol = spArrayListGetLast(src->history);
-        if(lastMoveCol != -1){
-            return lastMoveCol;
-        } else {
-            return -1;
-        }
+        return lastMoveCol;
     }
 }
 
