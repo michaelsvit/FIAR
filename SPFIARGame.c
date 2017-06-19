@@ -86,12 +86,12 @@ SP_FIAR_GAME_MESSAGE spFiarGameSetMove(SPFiarGame* src, int col){
     if(spFiarGameIsValidMove(src, col)){
         /* Add move to history */
         if(spArrayListIsFull(src->history)){
-            SP_ARRAY_LIST_MESSAGE msg = spArrayListRemoveLast(src->history);
+            SP_ARRAY_LIST_MESSAGE msg = spArrayListRemoveFirst(src->history);
             if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
                 return SP_FIAR_GAME_INVALID_ARGUMENT;
             }
         }
-        SP_ARRAY_LIST_MESSAGE msg = spArrayListAddFirst(src->history, col);
+        SP_ARRAY_LIST_MESSAGE msg = spArrayListAddLast(src->history, col);
         if(msg == SP_ARRAY_LIST_INVALID_ARGUMENT){
             return SP_FIAR_GAME_INVALID_ARGUMENT;
         }
@@ -125,8 +125,8 @@ SP_FIAR_GAME_MESSAGE spFiarGameUndoPrevMove(SPFiarGame* src){
     }
 
     /* Undo last move */
-    int lastMoveCol = spArrayListGetFirst(src->history);
-    spArrayListRemoveFirst(src->history);  /* impossible to get an error here */
+    int lastMoveCol = spArrayListGetLast(src->history);
+    spArrayListRemoveLast(src->history);  /* impossible to get an error here */
 
     src->tops[lastMoveCol]--;
     /* Set gameBoard entry of last added disc to be empty */
@@ -144,7 +144,7 @@ int undoColNumber(SPFiarGame* src) {
         return -1;
     }
     else {
-        int lastMoveCol = spArrayListGetFirst(src->history);
+        int lastMoveCol = spArrayListGetLast(src->history);
         return lastMoveCol;
     }
 }
