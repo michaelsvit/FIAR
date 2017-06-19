@@ -71,20 +71,20 @@ bool undoHandler(SPFiarGame* currentGame) {
 
 bool addDiscHandler(SPFiarGame** currentGame, SPCommand command, int difficultyLevel) {
     int userCol = command.arg-1;
-    SP_FIAR_GAME_MESSAGE msg;
-    if (!command.validArg || (msg = spFiarGameSetMove(*currentGame, userCol)) == SP_FIAR_GAME_INVALID_ARGUMENT) {
+    if (command.validArg == false || userCol < 0 || userCol >= SP_FIAR_GAME_N_COLUMNS) {
         printf("Error: column number must be in range 1-7\n");
         return false;
     }
-
-    if (msg == SP_FIAR_GAME_INVALID_MOVE) {
+    if (!spFiarGameIsValidMove(currentGame, userCol)) {
         printf("Error: column %d is full\n", command.arg);
         return false;
     }
-    if (spFiarCheckWinner(*currentGame) != 0) {
+    if (spFiarCheckWinner(currentGame) != 0) {
         printf("Error: the game is over\n");
         return false;
     }
+    /* if no problem set the move*/
+    spFiarGameSetMove(currentGame, userCol);
 
     /* if the user wins */
     if (spFiarCheckWinner(*currentGame) == SP_FIAR_GAME_PLAYER_1_SYMBOL) {
